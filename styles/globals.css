@@ -1,16 +1,37 @@
-html,
+@import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap');
+
 body {
+  background: #2a2a39;
   padding: 0;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  font-family: 'Source Code Pro', monospace;
+  overflow-x: hidden;
 }
 
-a {
-  color: inherit;
-  text-decoration: none;
+::selection {
+  background: #8dffc62c;
 }
 
-* {
-  box-sizing: border-box;
+button {
+  font-family: 'Source Code Pro', monospace;
+}
+
+input {
+  font-family: 'Source Code Pro', monospace;
+}
+
+img {
+  user-select: none;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #61c3bc;
 }
