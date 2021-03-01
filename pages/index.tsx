@@ -5,7 +5,14 @@ import Main from './../components/User/elements/MainInfo'
 import Repos from './../components/User/elements/Repos'
 import RepoData from './../components/User/elements/RepositoryStats'
 
-import { fab, faTwitter } from '@fortawesome/free-brands-svg-icons'
+import Footer from './../components/Footer'
+
+import styled from 'styled-components'
+
+const MainContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+`
 
 import {
   fas,
@@ -13,8 +20,11 @@ import {
   faPaperclip,
   faMapMarker,
   faCodeBranch,
+  faCode,
+  faHeart,
 } from '@fortawesome/free-solid-svg-icons'
 import { far, faStar } from '@fortawesome/free-regular-svg-icons'
+import { fab, faTwitter, faReact } from '@fortawesome/free-brands-svg-icons'
 import { library } from '@fortawesome/fontawesome-svg-core'
 
 import polyglot from 'gh-polyglot'
@@ -121,9 +131,11 @@ const Home = () => {
     const user = new polyglot(`${userInput}`)
     user.userStats((err, data) => {
       if (err) setError(err)
-      setLabels(data.map((lang) => lang.label))
-      setValues(data.map((lang) => lang.value))
-      setColours(data.map((lang) => lang.color))
+      else {
+        setLabels(data.map((lang) => lang.label))
+        setValues(data.map((lang) => lang.value))
+        setColours(data.map((lang) => lang.color))
+      }
     })
   }
 
@@ -132,16 +144,18 @@ const Home = () => {
   }, [])
 
   return (
-    <div>
-      <div className="search">
+    <MainContainer>
+      {firstTime ? (
         <Searchbar
           handleSubmitFunction={handleSubmit}
           handleSearchFunction={handleSearch}
           placeholder="Search By GitHub Username..."
         />
-      </div>
+      ) : (
+        ''
+      )}
       {error || firstTime ? (
-        <h1>Error</h1>
+        ''
       ) : (
         <>
           <Main
@@ -158,7 +172,6 @@ const Home = () => {
             following={following}
             repos={repos}
           />
-          <Repos topRepos={topRepos} />
           <RepoData
             labels={labels}
             data={values}
@@ -166,9 +179,11 @@ const Home = () => {
             starredReposName={mostStarredLabels}
             starredData={mostStarredValues}
           />
+          <Repos topRepos={topRepos} />
+          <Footer />
         </>
       )}
-    </div>
+    </MainContainer>
   )
 }
 
@@ -181,6 +196,8 @@ library.add(
   faPaperclip,
   faMapMarker,
   faBuilding,
-  faCodeBranch
+  faCodeBranch,
+  faCode,
+  faHeart
 )
 export default Home

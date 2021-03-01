@@ -3,8 +3,31 @@ import { Pie, Bar, Doughnut } from '@reactchartjs/react-chart.js'
 
 import styled from 'styled-components'
 
+const GraphsContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  height: 80vh;
+`
+
+const ChartHeader = styled.h1`
+  color: #61c3bc;
+  font-size: 24px;
+  margin-bottom: 30px;
+`
+
 const ChartContainer = styled.div`
-  max-width: 500px;
+  background: #111119;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 30px;
+  flex-direction: column;
+  margin: 50px;
+  height: 300px;
+  box-shadow: 0px 0px 50px 5px #00000050;
+  border-radius: 12px;
+  width: 400px;
 `
 
 interface ChartProps {
@@ -16,6 +39,8 @@ interface ChartProps {
 }
 
 const Charts = (props: ChartProps) => {
+  const chartColours = ['#2a9d8f', '#264653', '#e9c46a', '#f4a261', '#e76f51']
+
   const data = {
     responsive: false,
     labels: props.labels,
@@ -34,16 +59,15 @@ const Charts = (props: ChartProps) => {
       {
         label: 'Most Starred Repos',
         data: props.starredData,
-        backgroundColor: [
-          'rgba(255, 99, 132)',
-          'rgba(54, 162, 235)',
-          'rgba(255, 206, 86)',
-          'rgba(75, 192, 192)',
-          'rgba(153, 102, 255)',
-          'rgba(255, 159, 64)',
-        ],
+        backgroundColor: chartColours,
       },
     ],
+  }
+
+  const PieOptions = {
+    legend: {
+      display: false,
+    },
   }
 
   const options = {
@@ -57,21 +81,21 @@ const Charts = (props: ChartProps) => {
       ],
     },
     legend: {
-      labels: {
-        usePointStyle: true,
-      },
+      display: false,
     },
   }
 
   return (
-    <>
+    <GraphsContainer>
       <ChartContainer>
-        <Pie type="pie" data={data} />
+        <ChartHeader>Most Used Languages</ChartHeader>
+        <Pie type="pie" data={data} options={PieOptions} />
       </ChartContainer>
       <ChartContainer>
+        <ChartHeader>Most Starred Repositories</ChartHeader>
         <Bar type="bar" data={starredData} options={options} />
       </ChartContainer>
-    </>
+    </GraphsContainer>
   )
 }
 

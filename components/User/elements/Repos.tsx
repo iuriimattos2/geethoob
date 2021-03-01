@@ -21,6 +21,7 @@ const ReposGrid = styled.div`
 const RepoBox = styled.a`
   display: flex;
   flex-direction: column;
+  overflow: hidden;
   min-height: 200px;
   background: #111119;
   padding: 10px 20px;
@@ -35,7 +36,7 @@ const RepoBox = styled.a`
 
 const RepoName = styled.h1`
   color: #61c3bc;
-  font-size: 24px;
+  font-size: 22px;
 `
 
 const RepoDesc = styled.h1`
@@ -71,7 +72,11 @@ const Repos = (props) => {
       <ReposGrid>
         {props.topRepos.map((repo, index) => (
           <RepoBox key={index} href={repo.html_url} target="_blank">
-            <RepoName>{repo.name}</RepoName>
+            <RepoName>
+              {repo.name.length > 20
+                ? `${repo.name.substring(0, 20)}...`
+                : repo.name}
+            </RepoName>
             <RepoDesc>{repo.description}</RepoDesc>
             <RepoInfoContainer>
               <RepoInfo>
