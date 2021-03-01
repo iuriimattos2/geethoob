@@ -157,7 +157,14 @@ const MainInfo = (props: MainInfo) => {
       ) : (
         <SmallElement>
           <FontAwesomeIcon icon="paperclip" style={{ marginRight: 10 }} />
-          <SmallElementLink href={`https://${props.blog}`} target="_blank">
+          <SmallElementLink
+            href={
+              props.blog.startsWith('http')
+                ? props.blog
+                : `https://${props.blog}`
+            }
+            target="_blank"
+          >
             {props.blog}
           </SmallElementLink>
         </SmallElement>

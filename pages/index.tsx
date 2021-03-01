@@ -40,7 +40,8 @@ const Home = () => {
   const [values, setValues] = React.useState([])
   const [colours, setColours] = React.useState([])
 
-  const [languageData, setLanguageData] = React.useState(null)
+  const [mostStarredLabels, setMostStarredLabels] = React.useState([])
+  const [mostStarredValues, setMostStarredValues] = React.useState([])
 
   const [userInput, setUserInput] = React.useState(' ')
   const [error, setError] = React.useState(null)
@@ -91,6 +92,14 @@ const Home = () => {
             .filter((repo) => !repo.fork)
             .sort((a, b) => b['stargazers_count'] - a['stargazers_count'])
             .slice(0, 10)
+
+          const mostStarred = data
+            .filter((repo) => !repo.fork)
+            .sort((a, b) => b['stargazers_count'] - a['stargazers_count'])
+            .slice(0, 5)
+
+          setMostStarredLabels(mostStarred.map((repo) => repo.name))
+          setMostStarredValues(mostStarred.map((repo) => repo.stargazers_count))
 
           setTopRepos(sorted)
           setError(null)
@@ -154,7 +163,8 @@ const Home = () => {
             labels={labels}
             data={values}
             backgroundColour={colours}
-            label="Most Used Languages"
+            starredReposName={mostStarredLabels}
+            starredData={mostStarredValues}
           />
         </>
       )}

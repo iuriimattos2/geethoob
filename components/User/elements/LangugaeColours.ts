@@ -5,6 +5,8 @@ const LanguageColour = {
   TypeScript: '#2b7489',
   PureBasic: '#5a6986',
   'Objective-C++': '#6866fb',
+  'C#': '#199F4B',
+  'C++': '#A53B70',
   Self: '#0579aa',
   edn: '#db5855',
   NewLisp: '#87AED7',
