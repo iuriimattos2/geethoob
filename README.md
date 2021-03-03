@@ -1,34 +1,84 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Geethoob
 
-## Getting Started
+A cleaner look at your GitHub profiles with useful data.
 
-First, run the development server:
+Inspired by [Octoprofile](https://octoprofile.now.sh/)
 
-```bash
-npm run dev
-# or
-yarn dev
+# 💻 Building for development
+
+```zsh
+# clone the repository to your local machine
+$ git clone https://github.com/harshhhdev/geethoob.git
+$ cd geethoob
+
+# install dependencies
+$ yarn
+
+# start the development server
+$ yarn dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Navigate to [localhost](http://localhost:3000/)
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+# 🚀 Building for production 
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+Go to [vercel](https://vercel.com/)
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+Create a new project.
 
-## Learn More
+Select your GitHub repo.
 
-To learn more about Next.js, take a look at the following resources:
+Override the build command with `yarn build` 
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Hit deploy! ☘️
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+# 📂 File Structure 
 
-## Deploy on Vercel
+Take a quick look at this project's file structure
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```
+├── components
+│   ├── Footer.tsx
+│   ├── Searchbar.tsx
+│   └── User
+│       └── elements
+│           ├── LangugaeColours.ts
+│           ├── MainInfo.tsx
+│           ├── RepositoryStats.tsx
+│           └── Repos.tsx
+├── gh-polyglot.d.ts
+├── next-env.d.ts
+├── package.json
+├── pages
+│   ├── _app.js
+│   └── index.tsx
+├── public
+│   ├── favicon.ico
+│   └── vercel.svg
+├── README.md
+├── styles
+│   ├── globals.css
+│   └── Home.module.css
+├── tsconfig.json
+├── yarn-error.log
+└── yarn.lock
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+# ✌️ Contributing
+
+Feel free to take a look at the [open issues](https://github.com/harshhhdev/geethoob/issues) and find something to contribue to. If adding a feature, make sure to talk about it here first.
+
+```zsh
+# locally clone this repo
+$ git clone https://github.com/harshhhdev/geethoob.git/
+# create a new branch for your changes
+$ git branch feature
+add the new proejct files
+$ git add .
+# commit your project files
+$ git commit -m "message"
+# push to your repo
+git push repo branch
+```
+
+Then, be sure to open a pull request and wait for a review.
