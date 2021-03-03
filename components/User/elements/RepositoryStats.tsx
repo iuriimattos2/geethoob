@@ -1,5 +1,5 @@
 import React from 'react'
-import { Pie, Bar, Doughnut } from '@reactchartjs/react-chart.js'
+import { Pie, Bar } from '@reactchartjs/react-chart.js'
 
 import styled from 'styled-components'
 
@@ -52,7 +52,7 @@ interface ChartProps {
   starredReposName: string[]
 }
 
-const Charts = (props: ChartProps) => {
+const Charts: React.FC<ChartProps> = (props: ChartProps) => {
   const chartColours = ['#2a9d8f', '#264653', '#e9c46a', '#f4a261', '#e76f51']
 
   const data = {

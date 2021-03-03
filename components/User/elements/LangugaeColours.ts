@@ -1,6 +1,6 @@
 /* Based off of https://github.com/bchiang7/octoprofile/blob/main/utils/langColors.js */
 
-const LanguageColour = {
+const LanguageColour: {[key: string]: string} = {
   Mercury: '#ff2b2b',
   TypeScript: '#2b7489',
   PureBasic: '#5a6986',

@@ -73,11 +73,24 @@ const LanguageColour = styled.div`
   margin-right: 10px;
 `
 
-const Repos = (props) => {
+interface repo {
+  name: string
+  stargazers_count: string
+  forks_count: string
+  language: string
+  html_url: string
+  description: string
+}
+
+interface props {
+  topRepos: repo[]
+}
+
+const Repos: React.FC<props> = (props: props) => {
   return (
     <ReposContainer>
       <ReposGrid>
-        {props.topRepos.map((repo, index) => (
+        {props.topRepos.map((repo: repo, index: number) => (
           <RepoBox key={index} href={repo.html_url} target="_blank">
             <RepoName>
               {repo.name.length > 20

@@ -29,6 +29,37 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 
 import polyglot from 'gh-polyglot'
 
+interface repo {
+  name: string
+  stargazers_count: string
+  forks_count: string
+  language: string
+  html_url: string
+  description: string
+  fork: boolean
+}
+
+interface language {
+  value: number
+  color: string
+  label: string
+}
+
+interface Data {
+  name: string
+  login: string
+  bio: string
+  followers: string
+  following: string
+  public_repos: string
+  avatar_url: string
+  html_url: string
+  blog: string
+  twitter_username: string
+  company: string
+  location: string
+}
+
 const Home = () => {
   const [name, setName] = React.useState(' ')
   const [username, setUsername] = React.useState(' ')
@@ -54,9 +85,9 @@ const Home = () => {
   const [mostStarredValues, setMostStarredValues] = React.useState([])
 
   const [userInput, setUserInput] = React.useState(' ')
-  const [error, setError] = React.useState(null)
+  const [error, setError] = React.useState(' ')
 
-  const [firstTime, setFirstTime] = React.useState(null)
+  const [firstTime, setFirstTime] = React.useState(true)
 
   const setData = ({
     name,
@@ -71,7 +102,7 @@ const Home = () => {
     twitter_username,
     company,
     location,
-  }) => {
+  }: Data) => {
     setName(name)
     setUsername(login)
     setBio(bio)
@@ -86,11 +117,11 @@ const Home = () => {
     setLocation(location)
   }
 
-  const handleSearch = (e) => {
+  const handleSearch = (e: any) => {
     setUserInput(e.target.value)
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: HTMLFormElement) => {
     e.preventDefault()
 
     fetch(`https://api.github.com/users/${userInput}/repos?per_page=100`)
@@ -99,20 +130,22 @@ const Home = () => {
         if (data.message) setError(data.message)
         else {
           const sorted = data
-            .filter((repo) => !repo.fork)
-            .sort((a, b) => b['stargazers_count'] - a['stargazers_count'])
+            .filter((repo: repo) => !repo.fork)
+            // @ts-ignore
+            .sort((a: string, b: string) => b['stargazers_count'] - a['stargazers_count'])
             .slice(0, 10)
 
           const mostStarred = data
-            .filter((repo) => !repo.fork)
+            .filter((repo: repo) => !repo.fork)
+            // @ts-ignore
             .sort((a, b) => b['stargazers_count'] - a['stargazers_count'])
             .slice(0, 5)
 
-          setMostStarredLabels(mostStarred.map((repo) => repo.name))
-          setMostStarredValues(mostStarred.map((repo) => repo.stargazers_count))
+          setMostStarredLabels(mostStarred.map((repo: repo) => repo.name))
+          setMostStarredValues(mostStarred.map((repo: repo) => repo.stargazers_count))
 
           setTopRepos(sorted)
-          setError(null)
+          setError('')
           setFirstTime(false)
         }
       })
@@ -123,18 +156,18 @@ const Home = () => {
         if (data.message) setError(data.message)
         else {
           setData(data)
-          setError(null)
+          setError('')
           setFirstTime(false)
         }
       })
 
     const user = new polyglot(`${userInput}`)
-    user.userStats((err, data) => {
+    user.userStats((err: string, data: any) => {
       if (err) setError(err)
       else {
-        setLabels(data.map((lang) => lang.label))
-        setValues(data.map((lang) => lang.value))
-        setColours(data.map((lang) => lang.color))
+        setLabels(data.map((lang: language) => lang.label))
+        setValues(data.map((lang: language) => lang.value))
+        setColours(data.map((lang: language) => lang.color))
       }
     })
   }

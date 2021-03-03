@@ -62,7 +62,7 @@ interface SearchbarProps {
   placeholder: string
 }
 
-const Searchbar = (props: SearchbarProps) => {
+const Searchbar: React.FC<SearchbarProps> = (props: SearchbarProps) => {
   return (
     <SearchForm onSubmit={props.handleSubmitFunction}>
       <GeethoobLink href="#">

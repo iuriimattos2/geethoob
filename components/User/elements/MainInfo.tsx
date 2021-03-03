@@ -136,7 +136,7 @@ interface MainInfo {
   repos: string
 }
 
-const MainInfo = (props: MainInfo) => {
+const MainInfo: React.FC<MainInfo> = (props: MainInfo) => {
   return (
     <InfoContainer>
       <Avatar src={props.avatar} />
