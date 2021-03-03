@@ -16,10 +16,17 @@ const ReposGrid = styled.div`
   gap: 50px 50px;
   width: 90vw;
   grid-template-columns: repeat(auto-fill, minmax(30%, 1fr));
+  @media (max-width: 770px) {
+    dispaly: flex;
+    grid-template-columns: inherit;
+    gap: 50px 50px;
+    flex-direction: column;
+  }
 `
 
 const RepoBox = styled.a`
   display: flex;
+  grid-row: span 1 / auto;
   flex-direction: column;
   overflow: hidden;
   min-height: 200px;

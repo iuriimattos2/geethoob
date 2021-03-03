@@ -26,6 +26,9 @@ const Avatar = styled.img`
 const Name = styled.h1`
   color: white;
   font-size: 48px;
+  @media (max-width: 360px) {
+    font-size: 42px;
+  }
 `
 
 const Username = styled.a`
@@ -55,6 +58,9 @@ const Bio = styled.p`
   font-size: 18px;
   width: 50%;
   text-align: center;
+  @media (max-width: 600px) {
+    width: 90%;
+  }
 `
 
 const SmallElement = styled.div`
@@ -87,6 +93,9 @@ const SmallElementLink = styled.a`
 
 const SmallInfoContainer = styled.div`
   display: flex;
+  @media (max-width: 650px) {
+    flex-direction: column;
+  }
 `
 
 const InfoBox = styled.a`

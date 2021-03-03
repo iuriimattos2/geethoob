@@ -19,11 +19,13 @@ const FooterText = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  @media (max-width: 360px) {
+    font-size: 16px;
+  }
 `
 
 const FooterLinks = styled.a`
   color: #61c3bc;
-  font-size: 20px;
   position: relative;
   text-decoration: none;
   margin-left: 10px;

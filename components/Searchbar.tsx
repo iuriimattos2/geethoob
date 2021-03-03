@@ -28,6 +28,7 @@ const Title = styled.h1`
 const Description = styled.h1`
   color: white;
   font-size: 16px;
+  text-align: center;
   margin-top: 30px;
 `
 
@@ -49,6 +50,10 @@ const SearchInput = styled.input`
   color: #ffffff;
   font-size: 24px;
   width: 500px;
+  @media (max-width: 550px) {
+    width: 70%;
+    font-size: 14px;
+  }
 `
 
 interface SearchbarProps {

@@ -6,13 +6,21 @@ import styled from 'styled-components'
 const GraphsContainer = styled.div`
   display: flex;
   justify-content: center;
-  height: 80vh;
+  align-items: center;
+  width: 100vw;
+  margin-bottom: 100px;
+  @media (max-width: 1100px) {
+    flex-direction: column;
+  }
 `
 
 const ChartHeader = styled.h1`
   color: #61c3bc;
   font-size: 24px;
   margin-bottom: 30px;
+  @media (max-width: 500px) {
+    font-size: 16px;
+  }
 `
 
 const ChartContainer = styled.div`
@@ -28,6 +36,12 @@ const ChartContainer = styled.div`
   box-shadow: 0px 0px 50px 5px #00000050;
   border-radius: 12px;
   width: 400px;
+  @media (max-width: 500px) {
+    width: 300px;
+  }
+  @media (max-width: 400px) {
+    width: 250px;
+  }
 `
 
 interface ChartProps {
