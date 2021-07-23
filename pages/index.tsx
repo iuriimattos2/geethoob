@@ -1,37 +1,28 @@
 import React from 'react'
 
-import Searchbar from './../components/Searchbar'
-import Main from './../components/User/elements/MainInfo'
-import Repos from './../components/User/elements/Repos'
-import RepoData from './../components/User/elements/RepositoryStats'
+import Head from '@components/Head'
 
-import Footer from './../components/Footer'
+import Searchbar from '@components/Searchbar'
+import Main from '@components/User/MainInfo'
+import Repos from '@components/User/Repos'
+import RepoData from '@components/User/RepositoryStats'
 
-import styled from 'styled-components'
+import Footer from '@components/Footer'
 
-const MainContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-`
+import { styled } from '@css/theme.config'
+import global from '@css/global.style'
 
-import {
-  fas,
-  faBuilding,
-  faPaperclip,
-  faMapMarker,
-  faCodeBranch,
-  faCode,
-  faHeart,
-} from '@fortawesome/free-solid-svg-icons'
-import { far, faStar } from '@fortawesome/free-regular-svg-icons'
-import { fab, faTwitter, faReact } from '@fortawesome/free-brands-svg-icons'
-import { library } from '@fortawesome/fontawesome-svg-core'
+const MainContainer = styled('div', {
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+})
 
 import polyglot from 'gh-polyglot'
 
 interface repo {
   name: string
-  stargazers_count: string
+  stargazers_count: number
   forks_count: string
   language: string
   html_url: string
@@ -117,7 +108,7 @@ const Home = () => {
     setLocation(location)
   }
 
-  const handleSearch = (e: any) => {
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUserInput(e.target.value)
   }
 
@@ -131,18 +122,20 @@ const Home = () => {
         else {
           const sorted = data
             .filter((repo: repo) => !repo.fork)
-            // @ts-ignore
-            .sort((a: string, b: string) => b['stargazers_count'] - a['stargazers_count'])
+            .sort((a: repo, b: repo) => {
+              b.stargazers_count - a.stargazers_count
+            })
             .slice(0, 10)
 
           const mostStarred = data
             .filter((repo: repo) => !repo.fork)
-            // @ts-ignore
-            .sort((a, b) => b['stargazers_count'] - a['stargazers_count'])
+            .sort((a: repo, b: repo) => b.stargazers_count - a.stargazers_count)
             .slice(0, 5)
 
           setMostStarredLabels(mostStarred.map((repo: repo) => repo.name))
-          setMostStarredValues(mostStarred.map((repo: repo) => repo.stargazers_count))
+          setMostStarredValues(
+            mostStarred.map((repo: repo) => repo.stargazers_count)
+          )
 
           setTopRepos(sorted)
           setError('')
@@ -176,13 +169,16 @@ const Home = () => {
     setFirstTime(true)
   }, [])
 
+  global()
+
   return (
     <MainContainer>
+      <Head />
       {firstTime ? (
         <Searchbar
           handleSubmitFunction={handleSubmit}
           handleSearchFunction={handleSearch}
-          placeholder="Search By GitHub Username..."
+          placeholder='Search By GitHub Username...'
         />
       ) : (
         ''
@@ -194,16 +190,10 @@ const Home = () => {
           <Main
             avatar={avatar}
             name={name}
-            username={username}
             url={url}
             bio={bio}
             twitter={twitter}
-            location={location}
             blog={blog}
-            company={company}
-            followers={followers}
-            following={following}
-            repos={repos}
           />
           <RepoData
             labels={labels}
@@ -213,24 +203,11 @@ const Home = () => {
             starredData={mostStarredValues}
           />
           <Repos topRepos={topRepos} />
-          <Footer />
         </>
       )}
+      <Footer />
     </MainContainer>
   )
 }
 
-library.add(
-  fas,
-  fab,
-  far,
-  faTwitter,
-  faStar,
-  faPaperclip,
-  faMapMarker,
-  faBuilding,
-  faCodeBranch,
-  faCode,
-  faHeart
-)
 export default Home

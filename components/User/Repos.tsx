@@ -1,9 +1,9 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import * as Icons from 'react-feather'
 
-import LanguageColours from './LangugaeColours'
+import LanguageColours from '@lib/LanguageColours'
 
 const ReposContainer = styled.div`
   display: flex;
@@ -91,7 +91,7 @@ const Repos: React.FC<props> = (props: props) => {
     <ReposContainer>
       <ReposGrid>
         {props.topRepos.map((repo: repo, index: number) => (
-          <RepoBox key={index} href={repo.html_url} target="_blank">
+          <RepoBox key={index} href={repo.html_url} target='_blank'>
             <RepoName>
               {repo.name.length > 20
                 ? `${repo.name.substring(0, 20)}...`
@@ -100,17 +100,11 @@ const Repos: React.FC<props> = (props: props) => {
             <RepoDesc>{repo.description}</RepoDesc>
             <RepoInfoContainer>
               <RepoInfo>
-                <FontAwesomeIcon
-                  icon={['far', 'star']}
-                  style={{ marginRight: 5 }}
-                />
+                <Icons.Star />
                 {repo.stargazers_count}
               </RepoInfo>
               <RepoInfo>
-                <FontAwesomeIcon
-                  icon="code-branch"
-                  style={{ marginRight: 5 }}
-                />
+                <Icons.GitPullRequest />
                 {repo.forks_count}
               </RepoInfo>
               <RepoInfo style={{ marginLeft: 'auto' }}>
