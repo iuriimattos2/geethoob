@@ -1,68 +1,95 @@
 import React from 'react'
-import styled from 'styled-components'
+import { styled } from '@css/theme.config'
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import * as Icons from 'react-feather'
 
-const FooterContainer = styled.footer`
-  display: flex;
-  margin: 100px 0 30px 0;
-  justify-content: center;
-`
+const Wrapper = styled('div', {
+  display: 'flex',
+  justifyContent: 'space-around',
+  alignItems: 'center',
+  color: '$white1',
+  margin: '150px 0 50px 0',
+  width: '100vw',
+  '@iPhonePlus': {
+    flexDirection: 'column',
+  },
+})
 
-const FooterBox = styled.div`
-  display: flex;
-`
+const FooterWrapper = styled('div', {
+  display: 'flex',
+  variants: {
+    container: {
+      true: {
+        marginTop: 20,
+      },
+    },
+  },
+})
 
-const FooterText = styled.div`
-  color: #61c3bc;
-  font-size: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  @media (max-width: 360px) {
-    font-size: 16px;
-  }
-`
+const FooterText = styled('p', {
+  fontSize: '$3',
+  margin: '0 10px',
+  '@iPhoneSE': {
+    fontSize: '$2',
+  },
+})
 
-const FooterLinks = styled.a`
-  color: #61c3bc;
-  position: relative;
-  text-decoration: none;
-  margin-left: 10px;
-  &:before {
-    content: '';
-    width: 0;
-    height: 0.1em;
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    background: #61c3bc;
-    transition: all 0.3s;
-  }
-  &:hover:before {
-    width: 100%;
-    left: 0;
-    background: #61c3bc;
-  }
-`
+const FooterLink = styled('a', {
+  color: '$main',
+  textDecoration: 'none',
+  '&:hover': {
+    color: '$white10',
+  },
+  variants: {
+    text: {
+      true: {
+        margin: 0,
+      },
+    },
+  },
+  margin: '0 7px',
+})
 
 const Footer: React.FC = () => {
   return (
-    <FooterContainer>
-      <FooterBox>
+    <Wrapper>
+      <FooterWrapper container>
+        <FooterLink
+          href='https://github.com/harshhhdev/geethoob'
+          target='_blank'
+          text
+        >
+          <Icons.Code />
+        </FooterLink>
+        <FooterText>with</FooterText>
+        <Icons.Heart />
         <FooterText>
-          <FontAwesomeIcon icon="code" style={{ marginRight: 10 }} />
-          with
-          <FontAwesomeIcon icon="heart" style={{ margin: '0 10' }} />
-          and
-          <FontAwesomeIcon icon={['fab', 'react']} style={{ margin: '0 10' }} />
-          by
-          <FooterLinks href="https://harshhhdev.github.io/">
-            Harsh Singh
-          </FooterLinks>
+          and{' '}
+          <FooterLink href='https://nextjs.org' target='_blank' text>
+            Next.js
+          </FooterLink>
         </FooterText>
-      </FooterBox>
-    </FooterContainer>
+      </FooterWrapper>
+      <FooterWrapper container>
+        <FooterText>
+          © 2021{' '}
+          <FooterLink href='https://harshhhdev.github.io/' target='_blank' text>
+            Harsh Singh
+          </FooterLink>
+        </FooterText>
+        <FooterWrapper>
+          <FooterLink href='https://github.com/harshhhdev/' target='_blank'>
+            <Icons.GitHub />
+          </FooterLink>
+          <FooterLink href='https://twitter.com/harshhhdev/' target='_blank'>
+            <Icons.Twitter />
+          </FooterLink>
+          <FooterLink href='https://dribbble.com/harshhhdev/' target='_blank'>
+            <Icons.Dribbble />
+          </FooterLink>
+        </FooterWrapper>
+      </FooterWrapper>
+    </Wrapper>
   )
 }
 

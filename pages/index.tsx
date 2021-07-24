@@ -1,48 +1,30 @@
 import React from 'react'
 
-import Searchbar from './../components/Searchbar'
-import Main from './../components/User/elements/MainInfo'
-import Repos from './../components/User/elements/Repos'
-import RepoData from './../components/User/elements/RepositoryStats'
+import Head from '@components/Head'
 
-import Footer from './../components/Footer'
+import Searchbar from '@components/Searchbar'
+import Main from '@components/User/MainInfo'
+import Repos from '@components/User/Repos'
 
-import styled from 'styled-components'
+import Footer from '@components/Footer'
 
-const MainContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-`
+import { styled } from '@css/theme.config'
+import global from '@css/global.style'
 
-import {
-  fas,
-  faBuilding,
-  faPaperclip,
-  faMapMarker,
-  faCodeBranch,
-  faCode,
-  faHeart,
-} from '@fortawesome/free-solid-svg-icons'
-import { far, faStar } from '@fortawesome/free-regular-svg-icons'
-import { fab, faTwitter, faReact } from '@fortawesome/free-brands-svg-icons'
-import { library } from '@fortawesome/fontawesome-svg-core'
-
-import polyglot from 'gh-polyglot'
+const MainContainer = styled('div', {
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+})
 
 interface repo {
   name: string
-  stargazers_count: string
+  stargazers_count: number
   forks_count: string
   language: string
   html_url: string
   description: string
   fork: boolean
-}
-
-interface language {
-  value: number
-  color: string
-  label: string
 }
 
 interface Data {
@@ -62,27 +44,14 @@ interface Data {
 
 const Home = () => {
   const [name, setName] = React.useState(' ')
-  const [username, setUsername] = React.useState(' ')
   const [bio, setBio] = React.useState(' ')
-  const [followers, setFollowers] = React.useState(' ')
-  const [following, setFollowing] = React.useState(' ')
-  const [repos, setRepos] = React.useState(' ')
   const [avatar, setAvatar] = React.useState(' ')
   const [url, setUrl] = React.useState(' ')
 
   const [blog, setBlog] = React.useState(' ')
   const [twitter, setTwitter] = React.useState(' ')
-  const [company, setCompany] = React.useState(' ')
-  const [location, setLocation] = React.useState(' ')
 
   const [topRepos, setTopRepos] = React.useState([])
-
-  const [labels, setLabels] = React.useState([])
-  const [values, setValues] = React.useState([])
-  const [colours, setColours] = React.useState([])
-
-  const [mostStarredLabels, setMostStarredLabels] = React.useState([])
-  const [mostStarredValues, setMostStarredValues] = React.useState([])
 
   const [userInput, setUserInput] = React.useState(' ')
   const [error, setError] = React.useState(' ')
@@ -91,37 +60,25 @@ const Home = () => {
 
   const setData = ({
     name,
-    login,
     bio,
-    followers,
-    following,
-    public_repos,
     avatar_url,
     html_url,
     blog,
     twitter_username,
-    company,
-    location,
   }: Data) => {
     setName(name)
-    setUsername(login)
     setBio(bio)
-    setFollowers(followers)
-    setFollowing(following)
-    setRepos(public_repos)
     setAvatar(avatar_url)
     setUrl(html_url)
     setBlog(blog)
     setTwitter(twitter_username)
-    setCompany(company)
-    setLocation(location)
   }
 
-  const handleSearch = (e: any) => {
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUserInput(e.target.value)
   }
 
-  const handleSubmit = (e: HTMLFormElement) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
     fetch(`https://api.github.com/users/${userInput}/repos?per_page=100`)
@@ -129,22 +86,12 @@ const Home = () => {
       .then((data) => {
         if (data.message) setError(data.message)
         else {
-          const sorted = data
-            .filter((repo: repo) => !repo.fork)
-            // @ts-ignore
-            .sort((a: string, b: string) => b['stargazers_count'] - a['stargazers_count'])
-            .slice(0, 10)
-
           const mostStarred = data
             .filter((repo: repo) => !repo.fork)
-            // @ts-ignore
-            .sort((a, b) => b['stargazers_count'] - a['stargazers_count'])
-            .slice(0, 5)
+            .sort((a: repo, b: repo) => b.stargazers_count - a.stargazers_count)
+            .slice(0, 20)
 
-          setMostStarredLabels(mostStarred.map((repo: repo) => repo.name))
-          setMostStarredValues(mostStarred.map((repo: repo) => repo.stargazers_count))
-
-          setTopRepos(sorted)
+          setTopRepos(mostStarred)
           setError('')
           setFirstTime(false)
         }
@@ -160,29 +107,21 @@ const Home = () => {
           setFirstTime(false)
         }
       })
-
-    const user = new polyglot(`${userInput}`)
-    user.userStats((err: string, data: any) => {
-      if (err) setError(err)
-      else {
-        setLabels(data.map((lang: language) => lang.label))
-        setValues(data.map((lang: language) => lang.value))
-        setColours(data.map((lang: language) => lang.color))
-      }
-    })
   }
 
   React.useEffect(() => {
     setFirstTime(true)
   }, [])
 
+  global()
+
   return (
     <MainContainer>
+      <Head />
       {firstTime ? (
         <Searchbar
           handleSubmitFunction={handleSubmit}
           handleSearchFunction={handleSearch}
-          placeholder="Search By GitHub Username..."
         />
       ) : (
         ''
@@ -194,43 +133,17 @@ const Home = () => {
           <Main
             avatar={avatar}
             name={name}
-            username={username}
             url={url}
             bio={bio}
             twitter={twitter}
-            location={location}
             blog={blog}
-            company={company}
-            followers={followers}
-            following={following}
-            repos={repos}
-          />
-          <RepoData
-            labels={labels}
-            data={values}
-            backgroundColour={colours}
-            starredReposName={mostStarredLabels}
-            starredData={mostStarredValues}
           />
           <Repos topRepos={topRepos} />
-          <Footer />
         </>
       )}
+      <Footer />
     </MainContainer>
   )
 }
 
-library.add(
-  fas,
-  fab,
-  far,
-  faTwitter,
-  faStar,
-  faPaperclip,
-  faMapMarker,
-  faBuilding,
-  faCodeBranch,
-  faCode,
-  faHeart
-)
 export default Home
