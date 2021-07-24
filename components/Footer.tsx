@@ -7,8 +7,9 @@ const Wrapper = styled('div', {
   display: 'flex',
   justifyContent: 'space-around',
   alignItems: 'center',
-  color: '$main',
+  color: '$white1',
   margin: '150px 0 50px 0',
+  width: '100vw',
   '@iPhonePlus': {
     flexDirection: 'column',
   },
@@ -37,7 +38,7 @@ const FooterLink = styled('a', {
   color: '$main',
   textDecoration: 'none',
   '&:hover': {
-    color: '$white',
+    color: '$white10',
   },
   variants: {
     text: {
@@ -54,7 +55,7 @@ const Footer: React.FC = () => {
     <Wrapper>
       <FooterWrapper container>
         <FooterLink
-          href='https://github.com/harshhhdev/oponion'
+          href='https://github.com/harshhhdev/geethoob'
           target='_blank'
           text
         >

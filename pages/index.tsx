@@ -53,18 +53,13 @@ interface Data {
 
 const Home = () => {
   const [name, setName] = React.useState(' ')
-  const [username, setUsername] = React.useState(' ')
   const [bio, setBio] = React.useState(' ')
-  const [followers, setFollowers] = React.useState(' ')
-  const [following, setFollowing] = React.useState(' ')
   const [repos, setRepos] = React.useState(' ')
   const [avatar, setAvatar] = React.useState(' ')
   const [url, setUrl] = React.useState(' ')
 
   const [blog, setBlog] = React.useState(' ')
   const [twitter, setTwitter] = React.useState(' ')
-  const [company, setCompany] = React.useState(' ')
-  const [location, setLocation] = React.useState(' ')
 
   const [topRepos, setTopRepos] = React.useState([])
 
@@ -82,30 +77,20 @@ const Home = () => {
 
   const setData = ({
     name,
-    login,
     bio,
-    followers,
-    following,
     public_repos,
     avatar_url,
     html_url,
     blog,
     twitter_username,
-    company,
-    location,
   }: Data) => {
     setName(name)
-    setUsername(login)
     setBio(bio)
-    setFollowers(followers)
-    setFollowing(following)
     setRepos(public_repos)
     setAvatar(avatar_url)
     setUrl(html_url)
     setBlog(blog)
     setTwitter(twitter_username)
-    setCompany(company)
-    setLocation(location)
   }
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -130,9 +115,9 @@ const Home = () => {
           const mostStarred = data
             .filter((repo: repo) => !repo.fork)
             .sort((a: repo, b: repo) => b.stargazers_count - a.stargazers_count)
-            .slice(0, 5)
+            .slice(0, 20)
 
-          setMostStarredLabels(mostStarred.map((repo: repo) => repo.name))
+          setMostStarredLabels(mostStarred)
           setMostStarredValues(
             mostStarred.map((repo: repo) => repo.stargazers_count)
           )
@@ -140,6 +125,8 @@ const Home = () => {
           setTopRepos(sorted)
           setError('')
           setFirstTime(false)
+
+          console.log(mostStarred)
         }
       })
 
@@ -195,14 +182,7 @@ const Home = () => {
             twitter={twitter}
             blog={blog}
           />
-          <RepoData
-            labels={labels}
-            data={values}
-            backgroundColour={colours}
-            starredReposName={mostStarredLabels}
-            starredData={mostStarredValues}
-          />
-          <Repos topRepos={topRepos} />
+          <Repos topRepos={mostStarredLabels} />
         </>
       )}
       <Footer />
