@@ -16,6 +16,7 @@ const Title = styled('h1', {
 const Description = styled('p', {
   color: '$white1',
   margin: '20px 0',
+  textAlign: 'center',
 })
 
 const SearchForm = styled('form', {

@@ -32,10 +32,7 @@ const Repos: React.FC<{ topRepos: repo[] }> = ({ topRepos }) => {
                 <Icons.GitPullRequest />
                 {repo.forks_count}
               </S.RepoInfo>
-              <S.RepoInfo>
-                <Icons.GitPullRequest />
-                {repo.size.toLocaleString('en-IN')} KB
-              </S.RepoInfo>
+              <S.RepoInfo>{repo.size.toLocaleString('en-IN')} KB</S.RepoInfo>
               {repo.language === null ? (
                 ''
               ) : (

@@ -6,6 +6,9 @@ export const Wrapper = styled('div', {
   alignItems: 'center',
   margin: '100px 0',
   width: '100vw',
+  '@iPhonePlus': {
+    flexDirection: 'column',
+  },
 })
 
 export const UserWrapper = styled('div', {
@@ -14,6 +17,9 @@ export const UserWrapper = styled('div', {
   justifyContent: 'center',
   alignItems: 'center',
   marginRight: 100,
+  '@iPad': {
+    margin: '0 0 30px 0',
+  },
 })
 
 export const InfoWrapper = styled('div', {
@@ -39,6 +45,9 @@ export const Name = styled('h1', {
   color: 'white',
   fontSize: '$5',
   marginBottom: 20,
+  '@iPhone': {
+    marginBottom: 5,
+  },
 })
 
 export const Bio = styled('p', {
@@ -111,7 +120,7 @@ export const RepoDesc = styled('h1', {
   color: '$white10',
   fontSize: '$1',
   width: '70%',
-  marginTop: 10,
+  margin: '20px 0',
 })
 
 export const RepoInfoContainer = styled('div', {
@@ -125,6 +134,7 @@ export const RepoInfo = styled('p', {
   marginRight: 20,
   display: 'flex',
   alignItems: 'center',
+  textAlign: 'center',
   svg: {
     marginRight: 5,
   },
@@ -134,6 +144,13 @@ export const RepoInfo = styled('p', {
         marginLeft: 'auto',
       },
     },
+  },
+  '@iPadPro': {
+    marginRight: 10,
+    fontSize: 12,
+  },
+  '@iPhonePlus': {
+    fontSize: 12,
   },
 })
 
