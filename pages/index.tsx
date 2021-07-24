@@ -78,7 +78,7 @@ const Home = () => {
     setUserInput(e.target.value)
   }
 
-  const handleSubmit = (e: HTMLFormElement) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
     fetch(`https://api.github.com/users/${userInput}/repos?per_page=100`)
@@ -122,7 +122,6 @@ const Home = () => {
         <Searchbar
           handleSubmitFunction={handleSubmit}
           handleSearchFunction={handleSearch}
-          placeholder="Search By GitHub Username..."
         />
       ) : (
         ''

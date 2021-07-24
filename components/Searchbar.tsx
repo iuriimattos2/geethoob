@@ -15,13 +15,33 @@ const Title = styled('h1', {
 
 const Description = styled('p', {
   color: '$white1',
-  marginTop: 20,
+  margin: '20px 0',
+})
+
+const SearchForm = styled('form', {
+  display: 'flex',
+  justifyContent: 'center',
+})
+
+const SearchInput = styled('input', {
+  background: '#111119',
+  outline: 'none',
+  border: 'none',
+  padding: 30,
+  borderRadius: 5,
+  textAlign: 'center',
+  color: '$white8',
+  width: '50vw',
+  maxWidth: 500,
+  minWidth: 280,
+  fontFamily: '$main',
+  fontSize: '$3',
+  margin: '100px 0',
 })
 
 type SearchbarProps = {
-  handleSubmitFunction: (e: HTMLFormElement) => void
+  handleSubmitFunction: (e: React.FormEvent<HTMLFormElement>) => void
   handleSearchFunction: (e: React.ChangeEvent<HTMLInputElement>) => void
-  placeholder: string
 }
 
 const Searchbar: React.FC<SearchbarProps> = (props: SearchbarProps) => {
@@ -31,6 +51,12 @@ const Searchbar: React.FC<SearchbarProps> = (props: SearchbarProps) => {
       <Description>
         😍 Generate beautiful portfolios from your GitHub profile
       </Description>
+      <SearchForm onSubmit={props.handleSubmitFunction}>
+        <SearchInput
+          placeholder="GitHub Username..."
+          onChange={props.handleSearchFunction}
+        />
+      </SearchForm>
     </ContentWrapper>
   )
 }
