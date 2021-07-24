@@ -5,7 +5,6 @@ import Head from '@components/Head'
 import Searchbar from '@components/Searchbar'
 import Main from '@components/User/MainInfo'
 import Repos from '@components/User/Repos'
-import RepoData from '@components/User/RepositoryStats'
 
 import Footer from '@components/Footer'
 
@@ -18,8 +17,6 @@ const MainContainer = styled('div', {
   alignItems: 'center',
 })
 
-import polyglot from 'gh-polyglot'
-
 interface repo {
   name: string
   stargazers_count: number
@@ -28,12 +25,6 @@ interface repo {
   html_url: string
   description: string
   fork: boolean
-}
-
-interface language {
-  value: number
-  color: string
-  label: string
 }
 
 interface Data {
@@ -54,7 +45,6 @@ interface Data {
 const Home = () => {
   const [name, setName] = React.useState(' ')
   const [bio, setBio] = React.useState(' ')
-  const [repos, setRepos] = React.useState(' ')
   const [avatar, setAvatar] = React.useState(' ')
   const [url, setUrl] = React.useState(' ')
 
@@ -62,13 +52,6 @@ const Home = () => {
   const [twitter, setTwitter] = React.useState(' ')
 
   const [topRepos, setTopRepos] = React.useState([])
-
-  const [labels, setLabels] = React.useState([])
-  const [values, setValues] = React.useState([])
-  const [colours, setColours] = React.useState([])
-
-  const [mostStarredLabels, setMostStarredLabels] = React.useState([])
-  const [mostStarredValues, setMostStarredValues] = React.useState([])
 
   const [userInput, setUserInput] = React.useState(' ')
   const [error, setError] = React.useState(' ')
@@ -78,7 +61,6 @@ const Home = () => {
   const setData = ({
     name,
     bio,
-    public_repos,
     avatar_url,
     html_url,
     blog,
@@ -86,7 +68,6 @@ const Home = () => {
   }: Data) => {
     setName(name)
     setBio(bio)
-    setRepos(public_repos)
     setAvatar(avatar_url)
     setUrl(html_url)
     setBlog(blog)
@@ -105,28 +86,14 @@ const Home = () => {
       .then((data) => {
         if (data.message) setError(data.message)
         else {
-          const sorted = data
-            .filter((repo: repo) => !repo.fork)
-            .sort((a: repo, b: repo) => {
-              b.stargazers_count - a.stargazers_count
-            })
-            .slice(0, 10)
-
           const mostStarred = data
             .filter((repo: repo) => !repo.fork)
             .sort((a: repo, b: repo) => b.stargazers_count - a.stargazers_count)
             .slice(0, 20)
 
-          setMostStarredLabels(mostStarred)
-          setMostStarredValues(
-            mostStarred.map((repo: repo) => repo.stargazers_count)
-          )
-
-          setTopRepos(sorted)
+          setTopRepos(mostStarred)
           setError('')
           setFirstTime(false)
-
-          console.log(mostStarred)
         }
       })
 
@@ -140,16 +107,6 @@ const Home = () => {
           setFirstTime(false)
         }
       })
-
-    const user = new polyglot(`${userInput}`)
-    user.userStats((err: string, data: any) => {
-      if (err) setError(err)
-      else {
-        setLabels(data.map((lang: language) => lang.label))
-        setValues(data.map((lang: language) => lang.value))
-        setColours(data.map((lang: language) => lang.color))
-      }
-    })
   }
 
   React.useEffect(() => {
@@ -165,7 +122,7 @@ const Home = () => {
         <Searchbar
           handleSubmitFunction={handleSubmit}
           handleSearchFunction={handleSearch}
-          placeholder='Search By GitHub Username...'
+          placeholder="Search By GitHub Username..."
         />
       ) : (
         ''
@@ -182,7 +139,7 @@ const Home = () => {
             twitter={twitter}
             blog={blog}
           />
-          <Repos topRepos={mostStarredLabels} />
+          <Repos topRepos={topRepos} />
         </>
       )}
       <Footer />
